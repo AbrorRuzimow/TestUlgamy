@@ -1,0 +1,38 @@
+{% extends 'Student/base.html' %}
+{% load static %}
+{% block html_title %}
+
+{% endblock %}
+{% block content %}
+    <div class="lockscreen-logo">
+        <b>Teste başlamak üçin </b>Parol Giriziň
+    </div>
+    <div class="lockscreen-item">
+        <div class="lockscreen-image">
+            <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="User Image">
+        </div>
+        <form method="post" class="lockscreen-credentials">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="password" name="password" class="form-control" placeholder="password">
+                <div class="input-group-append">
+                    <button type="submit" class="btn">
+                        <i class="fas fa-arrow-right text-muted"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="help-block text-center">
+        Bu Paroly Mugallymdan soramaly
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <br>
+                    <p style="color: red">{{ message }}</p>
+                {% endif %}
+            {% endfor %}
+
+        {% endif %}
+    </div>
+{% endblock %}

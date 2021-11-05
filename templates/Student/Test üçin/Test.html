@@ -1,0 +1,307 @@
+{% extends 'Student/Test üçin/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'normalize.min.css' %}">
+    <style>
+
+        .base-timer {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .base-timer__svg {
+            transform: scaleX(-1);
+        }
+
+        .base-timer__circle {
+            fill: none;
+            stroke: none;
+        }
+
+        .base-timer__path-elapsed {
+            stroke-width: 7px;
+            stroke: grey;
+        }
+
+        .base-timer__path-remaining {
+            stroke-width: 7px;
+            stroke-linecap: round;
+            transform: rotate(90deg);
+            transform-origin: center;
+            transition: 1s linear all;
+            fill-rule: nonzero;
+            stroke: currentColor;
+        }
+
+        .base-timer__path-remaining.green {
+            color: rgb(65, 184, 131);
+        }
+
+        .base-timer__path-remaining.orange {
+            color: orange;
+        }
+
+        .base-timer__path-remaining.red {
+            color: red;
+        }
+
+        .base-timer__label {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+    </style>
+{% endblock %}
+{% block info %}
+    <div class="col-12">
+        <div class="row">
+            <div class="col-4">
+                <div class="info-box mb-0 bg-warning">
+                    <span class="info-box-icon"><i class="fas fa-clipboard"></i></span>
+                    <div class="info-box-content">
+                        <div class="progress-group">
+                            Soraglar
+                            <span class="float-right"><b>{{ page.number }}</b>/{{ count }}</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-dark" style="width: {{ page_list }}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="info-box mb-0 bg-gray-dark">
+                     <div id="app" style="margin: auto"></div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="info-box mb-0 bg-primary">
+                    <span class="info-box-icon"><i class="fas fa-pen"></i></span>
+                    <div class="info-box-content">
+                        <div class="progress-group">
+                            Jogap berildi
+                            <span class="float-right"><b>{{ jogap_count }}</b>/{{ count }}</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-dark" style="width: {{ jogap_pro }}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block html_title %}
+{% endblock %}
+{% block content %}
+    <div class="card card-primary card-outline">
+        <div class="card-body box-profile">
+            <form method="post">
+                {% csrf_token %}
+                {% for sorag in page %}
+                    <p class="text-muted text-center">{{ sorag.sorag.name }}</p>
+                    {% if sorag.sorag.surat %}
+                        <div class="card media_div_row">
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="col-lg-12">
+                                        <img style="width: 100%" src="{{ sorag.sorag.surat.url }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <ul class="list-group list-group-unbordered mb-3">
+                        <li class="list-group-item">
+                            <div class="left icheck-success d-inline">
+                                <input type="radio" name="test" value="a" {% if sorag.jogap_berdi == 'a' %}
+                                       checked {% endif %} id="radioSuccess1">
+                                <label for="radioSuccess1">
+                                    <p class="text-muted">{{ sorag.sorag.a }}</p>
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="left icheck-success d-inline">
+                                <input type="radio" name="test" value="b" {% if sorag.jogap_berdi == 'b' %}
+                                       checked {% endif %} id="radioSuccess2">
+                                <label for="radioSuccess2">
+                                    <p class="text-muted">{{ sorag.sorag.b }}</p>
+                                </label>
+                            </div>
+                        </li>
+                        {% if sorag.sorag.c %}
+                            <li class="list-group-item">
+                                <div class="left icheck-success d-inline">
+                                    <input type="radio" name="test" value="c" {% if sorag.jogap_berdi == 'c' %}
+                                           checked {% endif %} id="radioSuccess3">
+                                    <label for="radioSuccess3">
+                                        <p class="text-muted">{{ sorag.sorag.c }}</p>
+                                    </label>
+                                </div>
+                            </li>
+                        {% endif %}
+                        {% if sorag.sorag.d %}
+                            <li class="list-group-item">
+                                <div class="left icheck-success d-inline">
+                                    <input type="radio" name="test" value="d" {% if sorag.jogap_berdi == 'd' %}
+                                           checked {% endif %} id="radioSuccess4">
+                                    <label for="radioSuccess4">
+                                        <p class="text-muted">{{ sorag.sorag.d }}</p>
+                                    </label>
+                                </div>
+                            </li>
+                        {% endif %}
+                    </ul>
+                {% endfor %}
+
+                {% if page.has_previous %}
+                    <div class="float-left">
+                        <a href="{% url 'Test' sorad_id %}?sorag={{ page.previous_page_number }}"
+                           class="btn btn-danger btn-block"><b>Yza</b></a>
+                    </div>
+                {% endif %}
+                {% if page.has_next %}
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-success btn-block">
+                            <input type="hidden" name="next_page"
+                                   value="{% url 'Test' sorad_id %}?sorag={{ page.next_page_number }}">
+                            <b>Jogaby belle, indiki soraga geç</b>
+                        </button>
+                    </div>
+                {% else %}
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-success btn-block">
+                            <input type="hidden" name="next_page" value="Finish">
+                            <b>Jogaby belle, Testi tamamla</b>
+                        </button>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        const FULL_DASH_ARRAY = 283;
+        const WARNING_THRESHOLD = 10;
+        const ALERT_THRESHOLD = 5;
+
+        const COLOR_CODES = {
+            info: {
+                color: "green"
+            },
+            warning: {
+                color: "orange",
+                threshold: WARNING_THRESHOLD
+            },
+            alert: {
+                color: "red",
+                threshold: ALERT_THRESHOLD
+            }
+        };
+
+        const TIME_LIMIT = {{ date }};
+        let timePassed = 0;
+        let timeLeft = TIME_LIMIT;
+        let timerInterval = null;
+        let remainingPathColor = COLOR_CODES.info.color;
+
+        document.getElementById("app").innerHTML = `
+<div class="base-timer">
+  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g class="base-timer__circle">
+      <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+      <path
+        id="base-timer-path-remaining"
+        stroke-dasharray="283"
+        class="base-timer__path-remaining ${remainingPathColor}"
+        d="
+          M 50, 50
+          m -45, 0
+          a 45,45 0 1,0 90,0
+          a 45,45 0 1,0 -90,0
+        "
+      ></path>
+    </g>
+  </svg>
+  <span id="base-timer-label" class="base-timer__label">${formatTime(
+            timeLeft
+        )}</span>
+</div>
+`;
+
+        startTimer();
+
+        function onTimesUp() {
+            clearInterval(timerInterval);
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timePassed = timePassed += 1;
+                timeLeft = TIME_LIMIT - timePassed;
+                document.getElementById("base-timer-label").innerHTML = formatTime(
+                    timeLeft
+                );
+                setCircleDasharray();
+                setRemainingPathColor(timeLeft);
+
+                if (timeLeft === 0) {
+                    onTimesUp();
+                }
+            }, 1000);
+        }
+
+        function formatTime(time) {
+            const minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+
+            if (seconds < 10) {
+                seconds = `0${seconds}`;
+            }
+
+            return `${minutes}:${seconds}`;
+        }
+
+        function setRemainingPathColor(timeLeft) {
+            const {alert, warning, info} = COLOR_CODES;
+            if (timeLeft <= alert.threshold) {
+                document
+                    .getElementById("base-timer-path-remaining")
+                    .classList.remove(warning.color);
+                document
+                    .getElementById("base-timer-path-remaining")
+                    .classList.add(alert.color);
+            } else if (timeLeft <= warning.threshold) {
+                document
+                    .getElementById("base-timer-path-remaining")
+                    .classList.remove(info.color);
+                document
+                    .getElementById("base-timer-path-remaining")
+                    .classList.add(warning.color);
+            }
+        }
+
+        function calculateTimeFraction() {
+            const rawTimeFraction = timeLeft / TIME_LIMIT;
+            return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+        }
+
+        function setCircleDasharray() {
+            const circleDasharray = `${(
+                calculateTimeFraction() * FULL_DASH_ARRAY
+            ).toFixed(0)} 283`;
+            document
+                .getElementById("base-timer-path-remaining")
+                .setAttribute("stroke-dasharray", circleDasharray);
+        }
+    </script>
+{% endblock %}

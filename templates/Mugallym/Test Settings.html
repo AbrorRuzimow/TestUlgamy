@@ -1,0 +1,68 @@
+{% extends 'Mugallym/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+    <style>
+        .multiselectfull {
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+{% block html_title %}
+
+{% endblock %}
+{% block content %}
+    <form method="post">
+        <div class="card">
+
+            <div class="card-body row">
+                <div class="col-6 text-center d-flex align-items-center justify-content-center">
+                    <div>
+                        <h1>Soraglaryň sany</h1>
+                        <h3>{{ model_count }}</h3>
+                    </div>
+                </div>
+
+                {% csrf_token %}
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="inputSubject">{{ forms.error.label }}</label>
+                        {{ forms.error }}
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSubject">{{ forms.wagt.label }}</label>
+                        {{ forms.wagt }}
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSubject">{{ forms.a_ball.label }}</label>
+                        {{ forms.a_ball }}
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSubject">{{ forms.b_ball.label }}</label>
+                        {{ forms.b_ball }}
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSubject">{{ forms.c_ball.label }}</label>
+                        {{ forms.c_ball }}
+                    </div>
+                    <div class="col-12">
+                        <label>{{ forms.topar.label }}</label>
+                        {{ forms.topar }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card">
+            <button type="submit" class="btn btn-block btn-primary">Ýatda sakla</button>
+        </div>
+    </form>
+{% endblock %}
+{% block jss %}
+    <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+    <script>
+        $(function () {
+            $('.select2').select2()
+        })
+    </script>
+{% endblock %}

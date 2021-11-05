@@ -1,0 +1,36 @@
+{% extends 'Student/base.html' %}
+{% block html_title %}
+    <h1 class="m-0">Testler</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header border-transparent">
+            <h3 class="card-title">Tabşyrmaly testler</h3>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table m-0">
+                    <thead>
+                    <tr>
+                        <th>Testiň ady</th>
+                        <th>Soraglaryň sany</th>
+                        <th>Berlen wagt</th>
+                        <th>Başlamak</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {% for model in models %}
+                            <td>{{ model.name }}</td>
+                            <td>{{ model.sorag_count }}</td>
+                            <td>{{ model.sorag_min }}</td>
+                            <td><a href="{% url 'Parol_doret' model.id request.user.id %}" class="btn btn-primary">Başla</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

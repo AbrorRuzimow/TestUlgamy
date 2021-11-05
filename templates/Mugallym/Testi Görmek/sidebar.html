@@ -1,0 +1,38 @@
+{% load static %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="" class="brand-link">
+        <span class="brand-text font-weight-light">Synag Ulgamy</span>
+    </a>
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="info">
+                <a href="#" class="d-block">{% if request.user.first_name %} {{ request.user.first_name }} {{ request.user.last_name }} {% endif %}</a>
+            </div>
+        </div>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                {% if page %}
+                    {% for sorag in page.paginator.page_range %}
+                        {% if page.number == sorag %}
+                            <li class="nav-item ">
+                                <a href="{% url 'Show_Student_Test' sorag_id user  %}?sorag={{ sorag }}" class="nav-link active">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Sorag {{ sorag }}</p>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a href="{% url 'Show_Student_Test' sorag_id user %}?sorag={{ sorag }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Sorag {{ sorag }}</p>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</aside>

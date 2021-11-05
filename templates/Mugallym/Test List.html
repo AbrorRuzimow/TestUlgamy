@@ -1,0 +1,76 @@
+{% extends 'Mugallym/base.html' %}
+{% block html_title %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Testler</h3>
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm">
+                            <form method="get">
+                                <input type="text" name="search" class="form-control float-right" placeholder="Search">
+                            </form>
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-head-fixed text-nowrap">
+                        <thead>
+                        <tr>
+                            <th>Testiň ady</th>
+                            <th>Soraglaryň sany</th>
+                            <th>Soraglara berlen wagt (min)</th>
+                            <th>Döredilen wagty</th>
+                            <th>Amallar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for model in models %}
+                            <tr>
+                                <td>{{ model.name }}</td>
+                                <td>{{ model.sorag_count }}</td>
+                                <td>{{ model.sorag_min }}</td>
+                                <td>{{ model.date }}</td>
+                                <td>
+                                    <a href="{% url 'Teste_soraglary_goshmak' model.id %}"
+                                       class="btn btn-outline-success btn-sm"><i class="fa fa-edit"></i></a>
+                                    <a href="{% url 'Test_settings' model.id %}"
+                                       class="btn btn-outline-primary btn-sm"><i class="fas fa-cog"></i></a>
+                                    <a href="{% url 'Topar_Netije' model.id %}"
+                                       class="btn btn-outline-warning btn-sm"><i class="fas fa-clipboard"></i></a>
+                                    <a href="{% url 'Topar_SMS' model.id %}"
+                                       class="btn btn-outline-danger btn-sm"><i class="fas fa-envelope"></i></a>
+
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            {% if page.has_previous %}
+                                <li class="page-item"><a class="page-link"
+                                                         href="{% url 'Student_List' %}?sahypa={{ page.previous_page_number }}">«</a>
+                                </li>
+                            {% endif %}
+                            {% if page.has_next %}
+                                <li class="page-item"><a class="page-link"
+                                                         href="{% url 'Student_List' %}?sahypa={{ page.next_page_number }}">»</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

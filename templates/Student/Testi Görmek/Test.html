@@ -1,0 +1,205 @@
+{% extends 'Student/Testi Görmek/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+{% endblock %}
+{% block html_title %}
+{% endblock %}
+{% block content %}
+    <div class="card card-primary card-outline">
+        <div class="card-body box-profile">
+            <form method="post">
+                {% csrf_token %}
+                {% for sorag in page %}
+                    <p class="text-muted text-center">{{ sorag.sorag.name }}</p>
+                    {% if sorag.sorag.surat %}
+                        <div class="card media_div_row">
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="col-lg-12">
+                                        <img style="width: 100%" src="{{ sorag.sorag.surat.url }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <ul class="list-group list-group-unbordered mb-3">
+                        {% if sorag.jogap_berdi == sorag.sorag.success and sorag.jogap_berdi == 'a' %}
+                            <li class="list-group-item">
+                                <div class="left icheck-success d-inline">
+                                    <input type="radio" checked id="radioSuccess1" disabled>
+                                    <label for="radioSuccess1">
+                                        <p class="text-muted">{{ sorag.sorag.a }}</p>
+                                    </label>
+                                </div>
+                            </li>
+                        {% else %}
+                            {% if sorag.jogap_berdi == 'a' %}
+                                <li class="list-group-item">
+                                    <div class="left icheck-danger d-inline">
+                                        <input type="radio" checked id="radioSuccess1" disabled>
+                                        <label for="radioSuccess1">
+                                            <p class="text-muted">{{ sorag.sorag.a }}</p>
+                                        </label>
+                                    </div>
+                                </li>
+                            {% elif sorag.sorag.success == 'a' %}
+                                <li class="list-group-item">
+                                    <div class="left icheck-success d-inline">
+                                        <input type="radio" checked id="radioSuccess1" disabled>
+                                        <label for="radioSuccess1">
+                                            <p class="text-muted">{{ sorag.sorag.a }}</p>
+                                        </label>
+                                    </div>
+                                </li>
+                            {% else %}
+                                <li class="list-group-item">
+                                    <div class="left icheck-success d-inline">
+                                        <input type="radio" id="radioSuccess1" disabled>
+                                        <label for="radioSuccess1">
+                                            <p class="text-muted">{{ sorag.sorag.a }}</p>
+                                        </label>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                        {% if sorag.jogap_berdi == sorag.sorag.success and sorag.jogap_berdi == 'b' %}
+                            <li class="list-group-item">
+                                <div class="left icheck-success d-inline">
+                                    <input type="radio" checked id="radioSuccess2" disabled>
+                                    <label for="radioSuccess2">
+                                        <p class="text-muted">{{ sorag.sorag.b }}</p>
+                                    </label>
+                                </div>
+                            </li>
+                        {% else %}
+                            {% if sorag.jogap_berdi == 'b' %}
+                                <li class="list-group-item">
+                                    <div class="left icheck-danger d-inline">
+                                        <input type="radio" checked id="radioSuccess2" disabled>
+                                        <label for="radioSuccess2">
+                                            <p class="text-muted">{{ sorag.sorag.b }}</p>
+                                        </label>
+                                    </div>
+                                </li>
+                            {% elif sorag.sorag.success == 'b' %}
+                                <li class="list-group-item">
+                                    <div class="left icheck-success d-inline">
+                                        <input type="radio" checked id="radioSuccess2" disabled>
+                                        <label for="radioSuccess2">
+                                            <p class="text-muted">{{ sorag.sorag.b }}</p>
+                                        </label>
+                                    </div>
+                                </li>
+                            {% else %}
+                                <li class="list-group-item">
+                                    <div class="left icheck-success d-inline">
+                                        <input type="radio" id="radioSuccess2" disabled>
+                                        <label for="radioSuccess2">
+                                            <p class="text-muted">{{ sorag.sorag.b }}</p>
+                                        </label>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                        {% if sorag.sorag.c %}
+                            {% if sorag.jogap_berdi == sorag.sorag.success and sorag.jogap_berdi == 'c' %}
+                                <li class="list-group-item">
+                                    <div class="left icheck-success d-inline">
+                                        <input type="radio" checked id="radioSuccess3" disabled>
+                                        <label for="radioSuccess3">
+                                            <p class="text-muted">{{ sorag.sorag.c }}</p>
+                                        </label>
+                                    </div>
+                                </li>
+                            {% else %}
+                                {% if sorag.jogap_berdi == 'c' %}
+                                    <li class="list-group-item">
+                                        <div class="left icheck-danger d-inline">
+                                            <input type="radio" checked id="radioSuccess3" disabled>
+                                            <label for="radioSuccess3">
+                                                <p class="text-muted">{{ sorag.sorag.c }}</p>
+                                            </label>
+                                        </div>
+                                    </li>
+                                {% elif sorag.sorag.success == 'c' %}
+                                    <li class="list-group-item">
+                                        <div class="left icheck-success d-inline">
+                                            <input type="radio" checked id="radioSuccess3" disabled>
+                                            <label for="radioSuccess3">
+                                                <p class="text-muted">{{ sorag.sorag.c }}</p>
+                                            </label>
+                                        </div>
+                                    </li>
+                                {% else %}
+                                    <li class="list-group-item">
+                                        <div class="left icheck-success d-inline">
+                                            <input type="radio" id="radioSuccess3" disabled>
+                                            <label for="radioSuccess3">
+                                                <p class="text-muted">{{ sorag.sorag.c }}</p>
+                                            </label>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        {% if sorag.sorag.d %}
+                            {% if sorag.jogap_berdi == sorag.sorag.success and sorag.jogap_berdi == 'd' %}
+                                <li class="list-group-item">
+                                    <div class="left icheck-success d-inline">
+                                        <input type="radio" checked id="radioSuccess4" disabled>
+                                        <label for="radioSuccess4">
+                                            <p class="text-muted">{{ sorag.sorag.d }}</p>
+                                        </label>
+                                    </div>
+                                </li>
+                            {% else %}
+                                {% if sorag.jogap_berdi == 'd' %}
+                                    <li class="list-group-item">
+                                        <div class="left icheck-danger d-inline">
+                                            <input type="radio" checked id="radioSuccess4" disabled>
+                                            <label for="radioSuccess4">
+                                                <p class="text-muted">{{ sorag.sorag.d }}</p>
+                                            </label>
+                                        </div>
+                                    </li>
+                                {% elif sorag.sorag.success == 'd' %}
+                                    <li class="list-group-item">
+                                        <div class="left icheck-success d-inline">
+                                            <input type="radio" checked id="radioSuccess4" disabled>
+                                            <label for="radioSuccess4">
+                                                <p class="text-muted">{{ sorag.sorag.d }}</p>
+                                            </label>
+                                        </div>
+                                    </li>
+                                {% else %}
+                                    <li class="list-group-item">
+                                        <div class="left icheck-success d-inline">
+                                            <input type="radio" id="radioSuccess4" disabled>
+                                            <label for="radioSuccess4">
+                                                <p class="text-muted">{{ sorag.sorag.d }}</p>
+                                            </label>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    </ul>
+                {% endfor %}
+
+                {% if page.has_previous %}
+                    <div class="float-left">
+                        <a href="{% url 'Testi_gormek' sorag_id %}?sorag={{ page.previous_page_number }}"
+                           class="btn btn-danger btn-block"><b>Yza</b></a>
+                    </div>
+                {% endif %}
+                {% if page.has_next %}
+                    <div class="float-right">
+                        <a href="{% url 'Testi_gormek' sorag_id %}?sorag={{ page.next_page_number }}"
+                           class="btn btn-success btn-block"><b>Öňe</b></a>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

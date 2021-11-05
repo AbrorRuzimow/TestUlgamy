@@ -1,0 +1,48 @@
+{% extends 'Mugallym/base.html' %}
+{% load static %}
+{% block html_title %}
+
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-header border-transparent">
+            <h3 class="card-title">Parollar</h3>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table m-0">
+                    <thead>
+                    <tr>
+                        <th>T/b</th>
+                        <th>Ady we Familýasy</th>
+                        <th>Parol</th>
+                        <th>Teste başlady</th>
+                        <th>Giren wagty</th>
+                        <th>IP</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for model in models %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ model.user.first_name }} {{ model.user.last_name }}</td>
+                            <td>{{ model.kod }}</td>
+                            <td>{% if model.start %}
+                                <span class="badge badge-success">Girdi</span>
+                            {% else %}
+                                <span class="badge badge-danger">Girmedi</span>
+                            {% endif %} </td>
+                            <td>{{ model.date }}</td>
+                            <td>{{ model.ip }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer clearfix">
+            <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
+            <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+        </div>
+    </div>
+{% endblock %}

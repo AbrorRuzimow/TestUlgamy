@@ -1,0 +1,46 @@
+{% load static %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="" class="brand-link">
+        <span class="brand-text font-weight-light">Synag Ulgamy</span>
+    </a>
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                {% url 'Teste_soraglary_uytgetmek' pk=nav1 sorag_id=nav2 as page %}
+                {% if request.path == page %}
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{% url 'Teste_soraglary_goshmak' navbar.sorag.id %}" class="nav-link">
+                                <i class="fas fa-plus nav-icon"></i>
+                                <p>
+                                    Sorag goş
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+                {% for model in models %}
+                    <li class="nav-item">
+                        <a href="{% url 'Teste_soraglary_uytgetmek' model.sorag.id model.id %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                {{ forloop.counter }} Sorag
+                            </p>
+                        </a>
+                    </li>
+                    {% empty %}
+                     <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>
+                                Sorag ýok
+                            </p>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</aside>

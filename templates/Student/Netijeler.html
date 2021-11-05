@@ -1,0 +1,85 @@
+{% extends 'Student/base.html' %}
+{% load static %}
+{% block html_title %}
+
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Testler</h3>
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm">
+                            <form method="get">
+                                <input type="text" name="search" class="form-control float-right" placeholder="Search">
+                            </form>
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-head-fixed text-nowrap">
+                        <thead>
+                        <tr>
+                            <th>Testiň ady</th>
+                            <th>Tabşyran wagty</th>
+                            <th>Soraglara jogap berdi</th>
+                            <th>Dogry jogap</th>
+                            <th>Ýalňyş jogap</th>
+                            <th>Ball</th>
+                            <th>Baha</th>
+                            <th>Görmek</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for model in page %}
+                            <tr>
+                                <td>{{ model.sorag.name }}</td>
+                                <td>{{ model.e_date }}</td>
+                                <td>{{ model.sorag.sorag_count }}/{{ model.j_b_s_user }}</td>
+                                <td>{{ model.d_j_b_s_count }}</td>
+                                <td>{{ model.y_j_b_s_count }}</td>
+                                <td>{{ model.ball | floatformat:1 }}</td>
+                                <td>
+                                    {% if model.ball >= model.sorag.b_5 %}
+                                        5
+                                    {% elif model.ball >= model.sorag.b_4 %}
+                                        4
+                                    {% elif model.ball >= model.sorag.b_3 %}
+                                        3
+                                    {% else %}
+                                        2
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'Testi_gormek' model.sorag.id %}"
+                                       class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            {% if page.has_previous %}
+                                <li class="page-item"><a class="page-link"
+                                                         href="{% url 'Student_List' %}?sahypa={{ page.previous_page_number }}">«</a>
+                                </li>
+                            {% endif %}
+                            {% if page.has_next %}
+                                <li class="page-item"><a class="page-link"
+                                                         href="{% url 'Student_List' %}?sahypa={{ page.next_page_number }}">»</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

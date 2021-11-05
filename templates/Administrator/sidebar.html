@@ -1,0 +1,58 @@
+{% load static %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="" class="brand-link">
+        <span class="brand-text font-weight-light">Synag Ulgamy</span>
+    </a>
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="info">
+                <a href="" class="d-block">{% if request.user.first_name %} {{ request.user.first_name }} {{ request.user.last_name }} {% endif %}</a>
+            </div>
+        </div>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <li class="nav-item">
+                    <a href="{% url 'AdminDashboard' %}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Baş sahypa
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'Mugallym_List' %}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Mugallymlar
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'Student_List' %}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Talyplar
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'All_Toparlar' %}" class="nav-link">
+                        <i class="nav-icon fas fa-layer-group"></i>
+                        <p>
+                            Toparlar
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'All_Kafedra' %}" class="nav-link">
+                        <i class="nav-icon fas fa-layer-group"></i>
+                        <p>
+                            Kafedralar
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>

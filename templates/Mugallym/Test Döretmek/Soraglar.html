@@ -1,0 +1,104 @@
+{% extends 'Mugallym/Test Döretmek/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+{% endblock %}
+{% block html_title %}
+
+{% endblock %}
+{% block content %}
+    <div class="card card-primary card-outline">
+        <div class="card-body box-profile">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p class="">{{ forms.name }}</p>
+                <div class="card media_div_row">
+                    <div class=" custom-file">
+                        {{ forms.image }}
+                        <label class="custom-file-label" for="exampleInputFile">Suraty giriziň</label>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="col-lg-12">
+                                {% if navbar.surat %}
+                                    <img style="width: 100%" id="picture" src="{{ navbar.surat.url }}">
+                                {% endif %}
+                                <img style="width: 100%" class="img_preview">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <div class="left icheck-success d-inline">
+                            <input type="radio" name="test" value="a" {% if navbar.success == 'a' %}checked{% endif %}
+                                   id="radioSuccess1" required>
+                            <label for="radioSuccess1" class="col-12">
+                                {{ forms.a }}
+                            </label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="left icheck-success d-inline">
+                            <input type="radio" name="test" value="b" {% if navbar.success == 'b' %}checked{% endif %}
+                                   id="radioSuccess2" required>
+                            <label for="radioSuccess2" class="col-12">
+                                {{ forms.b }}
+                            </label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="left icheck-success d-inline">
+                            <input type="radio" name="test" value="c" {% if navbar.success == 'c' %}checked{% endif %}
+                                   id="radioSuccess3" required>
+                            <label for="radioSuccess3" class="col-12">
+                                {{ forms.c }}
+                            </label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="left icheck-success d-inline">
+                            <input type="radio" name="test" value="d"
+                                   id="radioSuccess4" {% if navbar.success == 'd' %}checked{% endif %} required>
+                            <label for="radioSuccess4" class="col-12">
+                                {{ forms.d }}
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+                <button type="submit" class="btn btn-block btn-outline-info">
+                    {% url 'Teste_soraglary_uytgetmek' navbar.sorag.id navbar.id as page %}
+                    {% if request.path == page %}
+                        Soragy üýtget
+                    {% else %}
+                        Soragy goş
+                    {% endif %}
+
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).on("change", ".select_media", function () {
+            var img_preview = $(this).parents(".media_div_row").find(".img_preview");
+            showPreviewMedia(this, img_preview);
+            $('#picture').remove();
+        });
+
+        function showPreviewMedia(input, img_preview) {
+            if (input.files) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    img_preview.attr("src", e.target.result);
+                    img_preview.show();
+                    img_preview.css({"border": "1px solid orange"});
+                    img_preview.css({"border-radius": "5px"});
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+{% endblock %}
